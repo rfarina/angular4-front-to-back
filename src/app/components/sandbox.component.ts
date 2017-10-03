@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Customer } from '../models/customer';
 
 @Component({
     selector: 'sandbox',
@@ -19,6 +20,14 @@ import { Component, OnInit } from '@angular/core';
             <li>{{ unusable }} </li>
             <li>{{ undef }} </li>
             <li>{{ n }} </li>
+            <li>Customer id:{{ customer.id }}, Name:{{customer.name}} </li>
+            <li>Customers: id:{{ customers[0].id }} Name:{{customers[0].name}} </li>
+            </ul>
+
+            <ul>
+                <li *ngFor="let customer of customers; let i = index">
+                    {{customer.id}}  {{customer.name}} index={{i}}
+                </li>
             </ul>
     `
 })
@@ -37,6 +46,8 @@ export class SandboxComponent implements OnInit   {
     unusable: void = undefined;
     undef: undefined = undefined;
     n: null = null;
+    customer:Customer;
+    customers:Customer[];
 
     constructor() {
         console.log('constructor ran', new Date().getTime());
@@ -52,6 +63,21 @@ export class SandboxComponent implements OnInit   {
             lastName: "Smith",
             age: 45
          }
+
+         this.customer = {
+             id:1,
+             name:'Customer 1'
+         }
+
+         this.customers = [{
+             id:2,
+             name:'Cust 2'
+         },
+         {
+             id:3,
+             name:'Cust 3'
+         }
+        ]
         
          console.log('ngOnInit ran', new Date().getTime());
          
