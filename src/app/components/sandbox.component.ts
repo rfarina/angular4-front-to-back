@@ -13,6 +13,12 @@ import { Component, OnInit } from '@angular/core';
             <li>{{ arrayAny[1] }} </li>
             <li>{{ arrayAny[2] }} </li>
             <li>{{ arrayAny[3] }} </li>
+            <li>{{ myTuple }} </li>
+            <li>{{ myTuple[0] }} </li>
+            <li>{{ myTuple[1] }} </li>
+            <li>{{ unusable }} </li>
+            <li>{{ undef }} </li>
+            <li>{{ n }} </li>
             </ul>
     `
 })
@@ -27,6 +33,10 @@ export class SandboxComponent implements OnInit   {
     person2: Person;
     object: any;
     arrayAny:any[] = ['1', 'Hello', 2, 'Goodbye'];
+    myTuple: [string, number] = ["hello", 3];
+    unusable: void = undefined;
+    undef: undefined = undefined;
+    n: null = null;
 
     constructor() {
         console.log('constructor ran', new Date().getTime());
