@@ -4,39 +4,36 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'sandbox',
     template:`
-    <h1>Hello 
+    <!-- 3 Ways to bind properties -->
+    <h2>Hello from Sandbox</h2>
+    <div><img src="{{ imageUrl }}"></div>
+    <div><img [src]="imageUrl"></div>
+    <div><img bind-src="imageUrl"></div>
 
-    <!-- Basic "if" on boolean
-       <span *ngIf="showName">{{ name }}</span>
-       <span *ngIf="!showName">World</span>
-    -->
-        <!-- Basic if else using ng-template -->
-        <span *ngIf="showName; else noName">{{ name }}</span>
-        <ng-template #noName>World</ng-template>
- 
-        <!-- Basic if else using ternary operator -->
-        <p>Hello {{ showName ? name : 'World' }}</p>
+    <h4>Image location: <span [textContent]="imageUrl"></span></h4>
+    <hr>
 
-        <!-- Basic Switch -->
-        <hr>
+    <!-- Controlling UI via hidden and disabled attributes -->
+    <h2>Create Post</h2>
+    <!-- The following paragraph will be hidden if "isSaved" === true -->
+    <p [hidden]="isSaved">Post has changed, please save...</p>
+    <!-- The following button will be disabled if "isSaved" === true -->
+    <button [disabled]="isSaved" (click)="savePost()">Save</button>
 
-        <div [ngSwitch]="greeting">
-            <div *ngSwitchCase="'1'">Hello World</div>
-            <div *ngSwitchCase="'2'">Hi There</div>
-            <div *ngSwitchCase="'3'">What's up?</div>
-            <div *ngSwitchDefault>Hello</div>
-            </div>
-       </h1>`,
-    styleUrls: ['./sandbox.component.css'] 
+    `
 })
 
 export class SandboxComponent {
-    name: string = 'John Doe';
-    showName: boolean = true;
-    greeting:string = '3';
+    imageUrl: string = 'http://lorempixel.com/400/200';
+    isSaved: boolean = false;
+
 
     constructor() {
 
+    }
+
+    savePost() {
+        this.isSaved = true;
     }
 } // end class
 
