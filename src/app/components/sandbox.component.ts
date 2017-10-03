@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
         <h2>Person 2 is: {{person2.firstName}}, {{person2.lastName}}, who is {{person2.age}}</h2>
         <ul>
             <li>{{ showAge('current') }} </li>
-            <li>{{ showAge('nextbday') }} </li>
+            <li>{{ showAge('next') }} </li>
+            <li>{{ object }} </li>
+            <li>{{ arrayAny[0] }} </li>
+            <li>{{ arrayAny[1] }} </li>
+            <li>{{ arrayAny[2] }} </li>
+            <li>{{ arrayAny[3] }} </li>
             </ul>
-    
     `
 })
 
@@ -21,10 +25,15 @@ export class SandboxComponent implements OnInit   {
         lastName: 'Farina'
     }
     person2: Person;
+    object: any;
+    arrayAny:any[] = ['1', 'Hello', 2, 'Goodbye'];
 
     constructor() {
         console.log('constructor ran', new Date().getTime());
-        this.hasBirthday();
+        // this.hasBirthday();  // Causes problem, because age accessed at different times.
+        // Seems like a "buffer" issue in angular
+
+        this.object = 25;  // ok...
     }
 
     ngOnInit() {
@@ -45,8 +54,8 @@ export class SandboxComponent implements OnInit   {
     showAge(which:string) {
         if(which === 'current'){
             return this.age;
-        }else {
-            return ++this.age;
+        }else if(which === 'next'){
+            return this.age +1;
         }
     }
 
