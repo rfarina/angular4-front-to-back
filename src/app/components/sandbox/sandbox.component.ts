@@ -1,20 +1,21 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component } from '@angular/core';
 
 
 @Component({
     selector: 'sandbox',
     template:`
-    <!-- ngClass directive to assign css classes to elements in template  -->
-    <!-- Assign the class ".special" only if "isSpecial" === true -->
-    <h4 [class.special]="isSpecial">This class is Special</h4>
+    <!-- set style based on value of "isSpecial" -->
+    <div 
+        [style.font-size]="isSpecial ? '24px' : '12px' "
+        [style.color]="isSpecial ? 'green' : 'black' "
+        >
+        This will changed based on value of "isSpecial"
+    </div>
+    <hr>
+    <!-- ngStyle directive to assign css styles to elements in template  -->
+    <div [ngStyle]="currentStyles">This will changed based on value of "currentStyles"
+</div>
 
-    <!-- Assign multiple classes by passing in an Object with one or more properties.
-         The property is the name of the class
-         The value is a boolean, which determines whether the class name is to be applied -->
-    <h4 [ngClass]="currentClasses">This div is initially Special and Savable</h4>
-
-    <button (click)="toggleSpecial()">Toggle Special</button>
-    <button (click)="toggleSaveable()">Toggle Saveable</button>
     `,
     styles:[
         `   .special{ 
@@ -30,37 +31,23 @@ import { Component, OnInit, DoCheck } from '@angular/core';
     ]
 })
 
-export class SandboxComponent implements DoCheck {
-    ngDoCheck(): void {
-        // Implemented to ensure that the currentClasses array is updated
-        // after the underlying properies are modified. If not, the changes
-        // will not be reflected in the UI.
-        this.setCurrentClasses();
-    }
+export class SandboxComponent {
     isSpecial: boolean = true;
-    canSave: boolean = true;
-    currentClasses:{};
+    canSave: boolean = false;
+    currentStyles = {};
 
     constructor() {
-        this.setCurrentClasses();
+        this.setCurrentStyles();
     }
 
-    toggleSpecial() {
-        this.isSpecial = !this.isSpecial;
-        // this.setCurrentClasses();
-    }
-    toggleSaveable() {
-        this.canSave = !this.canSave;
-        // this.setCurrentClasses();
-    }
-    setCurrentClasses() {
-        this.currentClasses = {
-            special: this.isSpecial,
-            saveable: this.canSave
+    setCurrentStyles() {
+        this.currentStyles = {
+            "color": 'red',
+            "font-size": '24px',
+            "display": 'block',
+            "font-style": this.canSave ? 'italic' : 'normal'
         }
-        
     }
-
 
 
 } // end class
