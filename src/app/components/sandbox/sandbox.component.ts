@@ -4,57 +4,43 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'sandbox',
     template:`
-    <!-- Events -->
+    <!-- Change Properties with Events -->
     <h2>Hello from Sandbox</h2>
     <button id="btn" 
-        (click)="fireEvent($event)"
-        (mouseover)="fireEvent($event)"
-        (mousedown)="fireEvent($event)"
-        (mouseup)="fireEvent($event)"
-        (dblclick)="fireEvent($event)"
-        (drag)="fireEvent($event)"
+        (click)="changeValue()"
        
-        >Keyboard Event
+        >Change Value
     </button>
 
-    <!-- Drag Events do not seem to be firing! -->
-    <button id="btn2" 
-        (drag)="fireEvent($event)"
-        (click)="fireEvent($event)"
-        
-        >Drag Events
+    <button id="btn" 
+        (click)="toggleVisibility()"
+   
+    >Toggle Visibility
     </button>
 
+    <div *ngIf="value">
+        <h1>{{text}}</h1>
+    </div>
 
 
     `
 })
 
 export class SandboxComponent {
-    
+    text:string = 'Hello';
+    value: boolean = false;
+
     constructor() {
-        
+    }
+    
+    changeValue() {
+        console.log('clicked');
+        this.text = "Goodbye";
     }
 
-    fireEvent(e) {
-        e.preventDefault();
-        console.log('fire Event id: ', e.target.id);
-        console.log(e.type);
-
-        // switch (e.type) {
-        //     case 'click':
-        //         console.log('clicked');
-        //         break;
-        
-        //     case 'mouseover':
-        //         console.log('mouseover');
-        //         break;
-
-        //     default:
-        //         break;
-        // }        
+    toggleVisibility() {
+        this.value = !this.value;
     }
-
 
 } // end class
 
