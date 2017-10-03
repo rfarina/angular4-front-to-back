@@ -1,40 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 
 
 @Component({
     selector: 'sandbox',
     template:`
-    <!-- 3 Ways to bind properties -->
-    <h2>Hello from Sandbox</h2>
-    <div><img src="{{ imageUrl }}"></div>
-    <div><img [src]="imageUrl"></div>
-    <div><img bind-src="imageUrl"></div>
+    <!-- ngClass directive to assign css classes to elements in template  -->
+    <!-- Assign the class ".special" only if "isSpecial" === true -->
+    <h4 [class.special]="isSpecial">This class is Special</h4>
 
-    <h4>Image location: <span [textContent]="imageUrl"></span></h4>
-    <hr>
+    <!-- Assign multiple classes by passing in an Object with one or more properties.
+         The property is the name of the class
+         The value is a boolean, which determines whether the class name is to be applied -->
+    <h4 [ngClass]="currentClasses">This div is initially Special and Savable</h4>
 
-    <!-- Controlling UI via hidden and disabled attributes -->
-    <h2>Create Post</h2>
-    <!-- The following paragraph will be hidden if "isSaved" === true -->
-    <p [hidden]="isSaved">Post has changed, please save...</p>
-    <!-- The following button will be disabled if "isSaved" === true -->
-    <button [disabled]="isSaved" (click)="savePost()">Save</button>
-
-    `
+    <button (click)="toggleSpecial()">Toggle Special</button>
+    <button (click)="toggleSaveable()">Toggle Saveable</button>
+    `,
+    styles:[
+        `   .special{ 
+                color: green;
+            }
+            h4{
+                font-size:24px;
+            }
+            .saveable{
+                text-transform:uppercase;
+            }
+        `
+    ]
 })
 
-export class SandboxComponent {
-    imageUrl: string = 'http://lorempixel.com/400/200';
-    isSaved: boolean = false;
-
+export class SandboxComponent implements DoCheck {
+    ngDoCheck(): void {
+        // Implemented to ensure that the currentClasses array is updated
+        // after the underlying properies are modified. If not, the changes
+        // will not be reflected in the UI.
+        this.setCurrentClasses();
+    }
+    isSpecial: boolean = true;
+    canSave: boolean = true;
+    currentClasses:{};
 
     constructor() {
-
+        this.setCurrentClasses();
     }
 
-    savePost() {
-        this.isSaved = true;
+    toggleSpecial() {
+        this.isSpecial = !this.isSpecial;
+        // this.setCurrentClasses();
     }
+    toggleSaveable() {
+        this.canSave = !this.canSave;
+        // this.setCurrentClasses();
+    }
+    setCurrentClasses() {
+        this.currentClasses = {
+            special: this.isSpecial,
+            saveable: this.canSave
+        }
+        
+    }
+
+
+
 } // end class
 
 
