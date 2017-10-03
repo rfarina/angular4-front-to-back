@@ -8,11 +8,11 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'sandbox',
     template:`
-    <!-- NgModel and 2 way binding -->
+    <!-- Form Submission -->
     <h2>Hello from Sandbox</h2>
 
     <div class="container">
-        <form>
+        <form action="Post" (submit)="formSubmit()">
             <div class="form-group">
                 <label>Name</label>
                 <input 
@@ -30,9 +30,16 @@ import { Component } from '@angular/core';
                     >
             </div>
             <input type="submit" value="Submit" class="btn btn-success">
-        </form>
 
-        <!-- The following interpolation strings are using 2 way bound fields -->
+            <!-- Add to list when form is submitted -->
+            <ul class="list-group">
+                <li *ngFor="let name of names" class="list-group-item">
+                    {{ name }}
+                </li>
+            
+            </ul>
+            </form>
+
         <h4>{{ name }}</h4>
         <h4>{{ age }}</h4>
         </div>
@@ -43,9 +50,16 @@ import { Component } from '@angular/core';
 export class SandboxComponent {
     name: string = "Bob";  // two way bound
     age: number = 25;      // two way bound 
+    names:string[] = ['Bob', 'John', 'Sally'];
     constructor() {
     }
     
+    formSubmit() {
+        console.log('form submitted');
+        this.names.push(this.name);
+        this.name = '';
+    }
+
 } // end class
 
 
