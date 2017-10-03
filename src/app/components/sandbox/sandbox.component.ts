@@ -4,51 +4,40 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'sandbox',
     template:`
-    <!-- set style based on value of "isSpecial" -->
-    <div 
-        [style.font-size]="isSpecial ? '24px' : '12px' "
-        [style.color]="isSpecial ? 'green' : 'black' "
-        >
-        This will changed based on value of "isSpecial"
-    </div>
+    <!-- Using Pipes (formatting) -->
+    <h2>Hello from Sandbox</h2>
+    <p>My birthday is {{ birthday }}</p>
+    <p>My formatted birthday using date is {{ birthday | date }}</p>
+    <p>My formatted birthday using date:"MM-dd-yy" is {{ birthday | <p>My formatted birthday using date:"MM-dd-yyyy" is {{ birthday | date:"MM-dd-yyyy" }}</p>
+    
     <hr>
-    <!-- ngStyle directive to assign css styles to elements in template  -->
-    <div [ngStyle]="currentStyles">This will changed based on value of "currentStyles"
-</div>
+    <!-- Uppercase and Lowercase -->
+    <p>not formatted 'cake' I love {{ 'cake' }} </p>
+    <p>formatted 'cake' to uppercase:  I love {{ 'cake' | uppercase }} </p>
+    <p>formatted 'CAKE' to lowercase:  I love {{ 'CAKE' | lowercase }} </p>
 
-    `,
-    styles:[
-        `   .special{ 
-                color: green;
-            }
-            h4{
-                font-size:24px;
-            }
-            .saveable{
-                text-transform:uppercase;
-            }
-        `
-    ]
+    <hr>
+    <!-- Currency -->
+    <p>You're unformatted total of {{ total }} is {{ total }} </p>
+    <p>You're formatted total of {{ total }} is   {{ total | currency }} </p>
+    <p>You're formatted total of {{ total }} in GBP is   {{ total | currency:"GBP" }} </p>
+    <p>You're formatted total of {{ total }} in GBP w/Symbol is   {{ total | currency:"GBP":"1" }} </p>
+    
+    <!-- Percent -->
+    <p>You're unformatted fee of {{ fee }} is {{ fee }} </p>
+    <p>You're formatted fee of {{ fee }} as % is {{ fee | percent }} </p>
+    
+    `
 })
 
 export class SandboxComponent {
-    isSpecial: boolean = true;
-    canSave: boolean = false;
-    currentStyles = {};
 
+    birthday = new Date(1981, 1, 15);
+    total: number = 500;
+    fee: number = 0.5;
     constructor() {
-        this.setCurrentStyles();
-    }
 
-    setCurrentStyles() {
-        this.currentStyles = {
-            "color": 'red',
-            "font-size": '24px',
-            "display": 'block',
-            "font-style": this.canSave ? 'italic' : 'normal'
-        }
     }
-
 
 } // end class
 
