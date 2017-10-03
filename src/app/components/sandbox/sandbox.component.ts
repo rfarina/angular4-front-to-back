@@ -1,50 +1,51 @@
+/* 
+    Note: To use NgModel, FormsModule must be imported into app.module
+*/
+
 import { Component } from '@angular/core';
 
 
 @Component({
     selector: 'sandbox',
     template:`
-    <!-- Change Properties with Events -->
+    <!-- NgModel and 2 way binding -->
     <h2>Hello from Sandbox</h2>
-    <h3>{{ text }}</h3>
-    <input 
-        type="text"
-        (input)="fireEvent($event)"
-        (focus)="fireEvent($event)"
-        (blur)="fireEvent($event)"
-        (cut)="fireEvent($event)"
-        (paste)="fireEvent($event)"
-        (copy)="fireEvent($event)"
-        
-        >
 
-    <hr>
-    <div>
-        <input type="text"
-        (keyup)="changeText($event)"
-        placeholder="change text"
-        value={{text}}
-        >
-    </div>
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label>Name</label>
+                <input 
+                    type="text" 
+                    class="form-control"
+                    [(ngModel)]="name" name="name"  >
+            </div>
+
+            <div class="form-group">
+                <label>Age</label>
+                <input 
+                    type="number" 
+                    class="form-control"
+                    [(ngModel)]="age" name="age"
+                    >
+            </div>
+            <input type="submit" value="Submit" class="btn btn-success">
+        </form>
+
+        <!-- The following interpolation strings are using 2 way bound fields -->
+        <h4>{{ name }}</h4>
+        <h4>{{ age }}</h4>
+        </div>
+
     `
 })
 
 export class SandboxComponent {
-    text:string = "Hello";
+    name: string = "Bob";  // two way bound
+    age: number = 25;      // two way bound 
     constructor() {
     }
     
-    fireEvent(e) {
-        console.log('event type: ', e.type);
-        console.log('value: ', e.target.value);
-    }
-
-    changeText(e) {
-        console.log('event type: ', e.type);
-        console.log('value: ', e.target.value);
-        this.text = e.target.value;
-    }
-
 } // end class
 
 
