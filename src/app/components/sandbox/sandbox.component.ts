@@ -6,40 +6,43 @@ import { Component } from '@angular/core';
     template:`
     <!-- Change Properties with Events -->
     <h2>Hello from Sandbox</h2>
-    <button id="btn" 
-        (click)="changeValue()"
-       
-        >Change Value
-    </button>
+    <h3>{{ text }}</h3>
+    <input 
+        type="text"
+        (input)="fireEvent($event)"
+        (focus)="fireEvent($event)"
+        (blur)="fireEvent($event)"
+        (cut)="fireEvent($event)"
+        (paste)="fireEvent($event)"
+        (copy)="fireEvent($event)"
+        
+        >
 
-    <button id="btn" 
-        (click)="toggleVisibility()"
-   
-    >Toggle Visibility
-    </button>
-
-    <div *ngIf="value">
-        <h1>{{text}}</h1>
+    <hr>
+    <div>
+        <input type="text"
+        (keyup)="changeText($event)"
+        placeholder="change text"
+        value={{text}}
+        >
     </div>
-
-
     `
 })
 
 export class SandboxComponent {
-    text:string = 'Hello';
-    value: boolean = false;
-
+    text:string = "Hello";
     constructor() {
     }
     
-    changeValue() {
-        console.log('clicked');
-        this.text = "Goodbye";
+    fireEvent(e) {
+        console.log('event type: ', e.type);
+        console.log('value: ', e.target.value);
     }
 
-    toggleVisibility() {
-        this.value = !this.value;
+    changeText(e) {
+        console.log('event type: ', e.type);
+        console.log('value: ', e.target.value);
+        this.text = e.target.value;
     }
 
 } // end class
