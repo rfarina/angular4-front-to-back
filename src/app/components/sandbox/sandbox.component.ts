@@ -8,8 +8,9 @@ import { DataService } from '../../services/data.service';
     template:`
     <!-- Using Service -->
     <h2>Hello from Sandbox</h2>
-
-
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let user of users">{{ user }}</li>
+    </ul>
     `
 })
 
