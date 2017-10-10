@@ -11,21 +11,23 @@ import * as Rx from 'rxjs';
 
 @Component({
     selector: 'sandbox',
-    template:`
-    <!-- Using Service that returns an Observable -->
-    <h2>Hello from Sandbox</h2>
-    <ul class="list-group">
-        <li class="list-group-item" *ngFor="let d of data">{{ d }}</li>
-    </ul>
-    <hr>
-    <button (click)="getNumbers()">Get Numbers</button>
-    `
+    templateUrl: './sandbox.component.html'
 })
 
 export class SandboxComponent {
     data:any[] = [];
     names:string[] = ['Callie', 'Rick'];
-
+    users:User[] = [];
+    // user = {
+    //     name: '',
+    //     email: '',
+    //     phone: ''
+    // }
+    user:User = {
+        name: '',
+        email: '',
+        phone: ''
+    }
 
     constructor(public dataService: DataService) {
         console.log('before');
@@ -46,7 +48,7 @@ export class SandboxComponent {
         ); // end subscribe
         console.log('after');
 
-        this.getClicksOnDocument();
+        // this.getClicksOnDocument();
 
         this.getNames();
     } // end constructor
@@ -62,14 +64,14 @@ export class SandboxComponent {
         )
     }
 
-    getClicksOnDocument() {
-        let clicks = Observable.fromEvent(document, 'click');
-        clicks.subscribe(
-            (evt) => console.log(evt)
-        );
+    // getClicksOnDocument() {
+    //     let clicks = Observable.fromEvent(document, 'click');
+    //     clicks.subscribe(
+    //         (evt) => console.log(evt)
+    //     );
 
 
-    }
+    // }
 
     getNames(){
         let names = Observable.of(this.names);
@@ -77,6 +79,34 @@ export class SandboxComponent {
             (name) => console.log(name)
         )
     }
+
+    getUsers() {
+        // alert('Getting users');
+        this.dataService.getUsers()
+        .subscribe(
+            users => {
+                console.log('users: ', users);
+                this.users = users;
+                console.log('this.users array: ', this.users);
+            },
+            error => console.log('http error: ', error)
+        );
+    }
+
+    addUser() {
+        console.log('user to add: ', this.user);
+        this.dataService.addUser(this.user)
+        .subscribe(
+            user => {
+                console.log('user added: ', user);
+                this.users.unshift(user)},
+            error => console.log('error: ', error)
+        )
+    }
 } // end class
 
-
+interface User {
+    name:string,
+    email:string,
+    phone:string
+}

@@ -4,6 +4,7 @@
 */
 
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http'
 import { Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/count';
@@ -16,7 +17,7 @@ export class DataService{
     data: Observable<Array<any>>;
     numbers: number[] = [1, 2, 3, 4, 5, 6, 7];
 
-    constructor() {
+    constructor(public http:Http) {
 
     }
 
@@ -86,7 +87,18 @@ export class DataService{
         return source;
     }
 
+    getUsers() {
+        return this.http.get("https://jsonplaceholder.typicode.com/users")
+        .map(res => {
+            console.log('resp from http request: ', res.json());
+            return res.json();
+        })
+    }
 
+    addUser(user) {
+        return this.http.post("https://jsonplaceholder.typicode.com/users", user)
+        .map(res => res.json())
+    }
 
 
 } // end class

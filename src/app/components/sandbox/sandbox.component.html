@@ -1,1 +1,32 @@
-<h1 class="special">Hello world from html file</h1>
+<h1 class="special">Hello world from Sandbox</h1>
+    <!-- Using Service that returns an Observable -->
+    <h2>Hello from Sandbox</h2>
+
+<form>
+    <div class="form-group">
+        <label for="">Name</label>
+        <input type="text" class="form-control" 
+        [(ngModel)]="user.name" name="name">
+    </div>
+    <div class="form-group">
+        <label for="">Email</label>
+        <input type="text" class="form-control" 
+        [(ngModel)]="user.email" name="email">
+    </div>
+    <div class="form-group">
+        <label for="">Phone</label>
+        <input type="text" class="form-control" 
+        [(ngModel)]="user.phone" name="phone">
+    </div>
+    <input type="submit" value="Add User"  (click)="addUser()">
+</form>
+
+<hr>
+<h2>Users</h2>
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let user of users">
+        {{ user.name }}, {{ user.email }}, {{ user.phone }}
+    </li>
+</ul>
+<hr>
+<button (click)="getUsers()">Get Users</button>
