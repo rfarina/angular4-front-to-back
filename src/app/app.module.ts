@@ -14,15 +14,16 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
+// Define all routes used by this application
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'navbar', component: NavbarComponent },
   { path: 'user/:userid', component: UserDetailsComponent },
-  { path: 'user/:userid/friends/:friendid', component: UserDetailsComponent }
-  // ,
-  // { path: '**', component: PageNotFoundComponent }
+  { path: 'user/:userid/friends/:friendid', component: UserDetailsComponent },
+  { path: '**', component: PageNotFoundComponent }
 ]
 
 @NgModule({
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
     HomeComponent,
     AboutComponent,
     NavbarComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
