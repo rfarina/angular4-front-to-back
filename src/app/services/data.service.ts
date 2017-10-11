@@ -100,5 +100,14 @@ export class DataService{
         .map(res => res.json())
     }
 
+    dltUser(id) {
+        return this.http.delete("https://jsonplaceholder.typicode.com/users/" + id)
+        .map(res => res.json());
+    }
+
+    updUser(user) {
+        return this.http.put("https://jsonplaceholder.typicode.com/users/" + user.id, user)
+        .map(res => res.json());
+    }
 
 } // end class
